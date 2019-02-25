@@ -1,0 +1,9 @@
+# vim: set expandtab ts=2 sw=2 sts=2:
+
+VAR1: %disable
+DICT2:
+  server_id: %false
+  bin_logs:
+    enable: %false
+
+

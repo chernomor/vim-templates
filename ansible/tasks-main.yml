@@ -1,0 +1,49 @@
+# vim: set expandtab ts=2 sw=2 sts=2:
+- name: Install soft
+  yum: name={{ item }} enablerepo=mariadb-10.1 state=present
+  with_items:
+    - %PKT
+  become: true
+
+- name: Create directory %DIR
+  file: path={{itemp}} state=directory group=%GROUP mode=0775
+  with_items:
+    - %DIR
+  become: true
+
+- name: Configure group acl for %DIR
+  acl: 
+    path: %DIR
+    entity: %GROUP
+    etype: group
+    permissions: rwX
+    default: yes
+    state: present
+  become: true
+
+- name: Cloning repo %PAT
+  git:
+    repo: %GIT
+    update: yes
+    dest: %DIR
+    version: master
+  tags: git
+
+- name: Create link
+  file: path=%DEST src=%ORIG state=link mode=a+rwxt
+  become: true
+
+- name: install %SERVICE.service
+  copy:
+    src: %DIR/%SERVICE.service
+    dest: /etc/systemd/system/%SERVICE.service
+    remote_src: yes
+  notify: reload systemd
+  become: true
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version >= "7"
+
+- name: enable %SERVICE
+  service: name=%SERVICE state=started enabled=yes
+  become: true
+
+
