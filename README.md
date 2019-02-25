@@ -15,17 +15,7 @@ $ git submodule add https://github.com/chernomor/vim-templates.git templates
 2. Add to your `.vimrc`:
 
 ```
-if has("autocmd")
-  augroup ansible
-    autocmd!
-
-    autocmd BufNewFile playbooks/*.yml   0r ~/.vim/templates/ansible/playbook.yml
-    autocmd BufNewFile handlers/main.yml 0r ~/.vim/templates/ansible/handlers-main.yml
-    autocmd BufNewFile    tasks/main.yml 0r ~/.vim/templates/ansible/tasks-main.yml
-    autocmd BufNewFile defaults/main.yml 0r ~/.vim/templates/ansible/defaults-main.yml
-                                                                    
-  augroup END                                                       
-endif
+source ~/.vim/templates/templates.vim
 ```
 
 3. Usage:
