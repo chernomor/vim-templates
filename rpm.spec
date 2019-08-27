@@ -13,7 +13,7 @@ Source:
 BuildRequires:
 Requires:
 
-%if 0%{?rhel}  == 7
+%if 0%{?rhel}  >= 7
 Requires: systemd
 BuildRequires: systemd
 %endif
@@ -43,14 +43,47 @@ make install DESTDIR=%{buildroot}
 
 #install -D %{SOURCE1} %{buildroot}/%{_docdir}/%{name}-%{version}/README
 
+#%post
+#getent group GROUP > /dev/null || groupadd --system GROUP
+#getent passwd USER > /dev/null || \
+#	useradd --system -g GROUP -d /var/lib/NAME -s /sbin/nologin USER
+
+#install -d -o USER /var/log/NAME
+#install -d -o USER /var/lib/NAME
+
+#%if 0%{?rhel} >= 7
+#systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
+#%systemd_post %{name}.service
+#%else
+#/sbin/chkconfig --add %{name} || :
+#%endif
+
+#%preun
+#/sbin/service %{name} stop || :
+
+#%if 0%{?rhel} >= 7
+#systemd-tmpfiles --remove %{_tmpfilesdir}/%{name}.conf || :
+#%systemd_preun %{name}.service || :
+#%else
+#/sbin/chkconfig --del %{name} || :
+#%endif
 
 %files
-#install -D -m 755 %FILE %{buildroot}%{_bindir}/%DEST
+#%config(noreplace) %{_sysconfdir}/%{name}/conf
 #%{_bindir}/file
 #%exclude %{_libdir}/lib*.la
+
 #%doc LICENSE
 #%doc README
 #%doc path/to/sample.cfg
+
+#%if 0%{?rhel} >= 7
+#%{_unitdir}/%{name}.service
+#%{_tmpfilesdir}/%{name}.conf
+#%else
+#%{_sysconfdir}/init.d/%{name}
+#%endif
+
 
 %files doc
 # include content of directory "docs" as %{_docdir}/%{_name}-%{_version}/
