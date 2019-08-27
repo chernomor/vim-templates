@@ -21,9 +21,16 @@ BuildRequires: systemd
 
 %description
 
+%package doc
+Summary: Docs for %{name}
+
+%description doc
+Docs for %{name}
+
 
 %prep
 %setup -q
+#%setup -q -n some-%{version}-thing
 
 
 %build
@@ -38,12 +45,17 @@ make install DESTDIR=%{buildroot}
 
 
 %files
-%doc
 #install -D -m 755 %FILE %{buildroot}%{_bindir}/%DEST
 #%{_bindir}/file
 #%exclude %{_libdir}/lib*.la
+#%doc LICENSE
+#%doc README
+#%doc path/to/sample.cfg
 
+%files doc
+# include content of directory "docs" as %{_docdir}/%{_name}-%{_version}/
+%doc docs/*
 
 %changelog
 * Wed Nov 07 2018 NAME <EMAIL> - 0.0.0
-
+- initial
