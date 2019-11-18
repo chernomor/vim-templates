@@ -42,14 +42,15 @@ make %{?_smp_mflags}
 make install DESTDIR=%{buildroot}
 
 #install -D %{SOURCE1} %{buildroot}/%{_docdir}/%{name}-%{version}/README
+#install -D %{SOURCE2} %{buildroot}/%{_unitdir}/%{name}.service
 
 #%post
-#getent group GROUP > /dev/null || groupadd --system GROUP
-#getent passwd USER > /dev/null || \
-#	useradd --system -g GROUP -d /var/lib/NAME -s /sbin/nologin USER
+getent group %{name} > /dev/null || groupadd --system %{name}
+getent passwd %{name} > /dev/null || \
+    useradd --system -g %{name} -d /var/lib/%{name} -s /sbin/nologin %{name}
 
-#install -d -o USER /var/log/NAME
-#install -d -o USER /var/lib/NAME
+#install -d -o %{name} /var/log/%{name}
+#install -d -o %{name} /var/lib/%{name}
 
 #%if 0%{?rhel} >= 7
 #systemd-tmpfiles --create %{_tmpfilesdir}/%{name}.conf
