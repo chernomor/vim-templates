@@ -15,6 +15,8 @@ if has("autocmd")
      " RPM.spec
     autocmd BufNewFile *.spec 0r ~/.vim/templates/rpm.spec
 
+    autocmd BufNewFile *.rs 0r ~/.vim/templates/rust.rs
+
   augroup END
 
 endif
