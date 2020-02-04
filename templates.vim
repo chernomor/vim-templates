@@ -10,6 +10,7 @@ if has("autocmd")
     autocmd BufNewFile *handlers/main.yml 0r ~/.vim/templates/ansible/handlers-main.yml
     autocmd BufNewFile    *tasks/main.yml 0r ~/.vim/templates/ansible/tasks-main.yml
     autocmd BufNewFile *defaults/main.yml 0r ~/.vim/templates/ansible/defaults-main.yml
+    autocmd BufNewFile *vars/main.yml 0r ~/.vim/templates/ansible/defaults-main.yml
 
      " RPM.spec
     autocmd BufNewFile *.spec 0r ~/.vim/templates/rpm.spec
