@@ -9,10 +9,18 @@
   tasks:
   - name: task1
     ....
+  - name: ...
+    shell: git rev-parse HEAD
+    args:
+      chdir: "{{ path }}"
+    register: new_head
+    changed_when: "new_head.rc != 0"
+    check_mode: no
 
 - hosts: %HOSTS
   # need to detect centos7 
   gather_facts: yes
+  vars:
     webconf_git_repo: %GIT
   roles:
     - {role: %ROLE, VAR_FOR_ROLE: false, ANOTHER_VAR: "some",  when: "new_head.stdout != base_head.stdout"  }
