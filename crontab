@@ -1,0 +1,3 @@
+MAILTO=user@example.org
+
+*/5 * * * * root path/to/command

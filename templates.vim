@@ -12,6 +12,8 @@ if has("autocmd")
     autocmd BufNewFile *defaults/main.yml 0r ~/.vim/templates/ansible/defaults-main.yml
     autocmd BufNewFile *vars/main.yml 0r ~/.vim/templates/ansible/defaults-main.yml
 
+    autocmd BufNewFile */crontab 0r ~/.vim/templates/crontab
+
      " RPM.spec
     autocmd BufNewFile *.spec 0r ~/.vim/templates/rpm.spec
 
